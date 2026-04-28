@@ -86,7 +86,7 @@ class TestFinalProducts:
             raise e
         
         print("\n" + "="*60)
-        print(f"✨✅ نجح الاختبار! المنتج القياسي تمت اضافته بنجاح")
+        print(f"✨Final Product added successfull")
         print(f"📝 الاسم: {product_name_ar}")
         print(f"🔢 الكود: {product_code}")
         print("="*60 + "\n")
