@@ -150,25 +150,17 @@ class AddProductPage:
         # 1. اختيار الطول - تحديث المحدد ليكون أكثر دقة
         # نضغط أولاً على حقل القائمة المنسدلة الخاص بالطول
         self.page.locator("div").filter(has_text=re.compile(r"^length$")).nth(1).click()
-        self.page.wait_for_timeout(500) # انتظار بسيط لظهور الخيارات
-        
-        # بدلاً من get_by_text العام، نستخدم محدد يبحث عن القيمة داخل قائمة الخيارات (Dropdown items)
-        # غالباً ما تكون الخيارات في عناصر لها role="option" أو داخل div معين
-        try:
-            self.page.get_by_role("option", name=length, exact=True).click()
-        except:
-            # حل بديل إذا لم يكن role="option" موجوداً
-            self.page.locator(f"//div[contains(@class, 'ant-select-item-option-content') and text()='{length}']").click()
-        
-        self.page.wait_for_timeout(500)
+        dropdown_container = self.page.locator(".ant-select-dropdown:not(.ant-select-dropdown-hidden)")
+
+        # اختاري القيمة من داخل الحاوية دي فوراً
+        dropdown_container.get_by_title(length, exact=True).click()
 
         # 2. اختيار العرض بنفس الطريقة المستقرة
         self.page.locator("div").filter(has_text=re.compile(r"^width$")).nth(1).click()
-        self.page.wait_for_timeout(1000)
-        try:
-            self.page.get_by_role("option", name=width, exact=True).click()
-        except:
-            self.page.locator(f"//div[contains(@class, 'ant-select-item-option-content') and text()='{width}']").last.click()
+        dropdown_container = self.page.locator(".ant-select-dropdown:not(.ant-select-dropdown-hidden)")
+
+        # اختاري القيمة من داخل الحاوية دي فوراً
+        dropdown_container.get_by_title(width, exact=True).click()
 
         
         # عدد الحواف
