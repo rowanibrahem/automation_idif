@@ -6,7 +6,7 @@ class LoginPage:
     
     def login(self, username="JEDDAH", password="JEDDAH"):
         """تسجيل الدخول للنظام"""
-        print("🔐 جاري تسجيل الدخول...")
+        print("🔐 Go to login page...")
         
         # روح للصفحة الرئيسية
         self.page.goto("https://idif.ebdaa-business.com")
@@ -28,6 +28,6 @@ class LoginPage:
         # نتأكد من وجود Final Products
         try:
             self.page.wait_for_selector("text=Final Products", timeout=10000)
-            print("✅ تم تسجيل الدخول بنجاح")
+            print("✅ Login successful")
         except:
-            print("✅ تم تسجيل الدخول (تم التخطي للتحقق)")
+            print("✅ Login completed (verification skipped)")

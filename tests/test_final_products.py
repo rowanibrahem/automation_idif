@@ -2,6 +2,7 @@ import pytest
 import re
 import time
 import random
+import json
 from datetime import datetime
 from pages.login_page import LoginPage
 from pages.final_products_page import FinalProductsPage
@@ -329,3 +330,10 @@ class TestFinalProducts:
             
             self.page.screenshot(path=f"failure_imported_{int(time.time())}.png")
             raise e
+        
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(self, item, call):
+        outcome = yield
+        report = outcome.get_result()
+        if hasattr(self, 'test_data'):
+            report.test_data = json.dumps(self.test_data, ensure_ascii=False)

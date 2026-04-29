@@ -6,7 +6,6 @@ import random
 class AddProductPage:
     def __init__(self, page: Page):
         self.page = page
-        # أضيفي القيم المتاحة للاختيار العشوائي
         self.length_options = ["1800", "1900", "2000", "2500", "3000"]
         self.width_options = ["800", "900", "1000", "2000", "2500"]
         self.frame_edges_options = ["3", "4"]
@@ -34,18 +33,18 @@ class AddProductPage:
     
     def upload_image(self, image_path):
         """رفع صورة المنتج - الطريقة الصحيحة"""
-        print(f"🖼️ جاري رفع الصورة: {image_path}")
+        print(f"🖼️ Go to upload image: {image_path}")
         
         # المسار المطلق للصورة
         full_path = r"C:\Users\rowan\automation_project\test_data\product_image.jpeg"
         
         # تأكد من وجود الصورة
         if os.path.exists(full_path):
-            print(f"✅ تم العثور على الصورة: {full_path}")
+            print(f"✅ Found image: {full_path}")
             image_path = full_path
         else:
-            print(f"❌ الصورة غير موجودة في: {full_path}")
-            print("📌 من فضلك تأكد من وجود الصورة في المجلد")
+            print(f"❌ Image not found in: {full_path}")
+            print("📌 Please make sure the image exists in the folder")
             return False
         
         try:
@@ -70,11 +69,11 @@ class AddProductPage:
             
             # انتظر ظهور معاينة الصورة
             self.page.wait_for_timeout(2000)
-            print("✅ تم رفع الصورة بنجاح")
+            print("✅ image uploaded successfully")
             return True
             
         except Exception as e:
-            print(f"⚠️ خطأ في رفع الصورة: {e}")
+            print(f"⚠️ Error uploading image: {e}")
             
             # جرب طريقة تانية: عن طريق الـ div
             try:
@@ -86,15 +85,15 @@ class AddProductPage:
                 # ارفع الصورة
                 self.page.set_input_files("input[type='file']", image_path)
                 self.page.wait_for_timeout(2000)
-                print("✅ تم رفع الصورة بنجاح (طريقة 2)")
+                print("✅ image uploaded successfully (method 2)")
                 return True
             except Exception as e2:
-                print(f"❌ فشل رفع الصورة: {e2}")
+                print(f"❌ Failed to upload image: {e2}")
                 return False
     
     def fill_basic_info(self, name_ar, name_en, code, price, quantity, min_quantity):
         """تعبئة البيانات الأساسية"""
-        print("📝 جاري تعبئة البيانات الأساسية...")
+        print("📝 Go to fill basic info...")
         
         # الاسم بالعربي
         self.page.get_by_role("textbox", name="Product Name in Arabic*").fill(name_ar)
@@ -114,11 +113,11 @@ class AddProductPage:
         # الحد الأدنى للكمية
         self.page.get_by_role("textbox", name="Minimum Quantity").fill(min_quantity)
         
-        print("✅ تم تعبئة البيانات الأساسية")
+        print("✅ Go to fill basic info...")
     
     def select_product_type(self, product_type):
         """اختيار نوع المنتج (Standard أو Imported)"""
-        print(f"📌 اختيار نوع المنتج: {product_type}")
+        print(f"📌 Go to select product type: {product_type}")
         
         # فتح القائمة المنسدلة
         self.page.get_by_role("combobox", name="Product type*").click()
@@ -131,7 +130,7 @@ class AddProductPage:
             self.page.get_by_title("Imported").click()
         
         self.page.wait_for_timeout(1000)
-        print(f"✅ تم اختيار نوع {product_type}")
+        print(f"✅ Go to select product type: {product_type}")
     
     def fill_standard_options(self, length=None, width=None, frame_edges=None, direction=None, temperature_type=None, accessories_type=None):
         """تعديل لاختيار الخيارات بشكل أكثر استقراراً"""
@@ -145,7 +144,7 @@ class AddProductPage:
         if accessories_type is None: accessories_type = self.get_random_accessories()
         # ... بقية التعيينات العشوائية كما هي ...
 
-        print("⚙️ جاري تعبئة خيارات المنتج القياسي...")
+        print("⚙️ Go to fill standard options...")
 
         # 1. اختيار الطول - تحديث المحدد ليكون أكثر دقة
         # نضغط أولاً على حقل القائمة المنسدلة الخاص بالطول
@@ -173,7 +172,7 @@ class AddProductPage:
             self.page.get_by_title(str(frame_edges), exact=True).click()
             print(f"✅ عدد الحواف: {frame_edges}")
         except Exception as e:
-            print(f"⚠️ فشل اختيار عدد الحواف: {e}")
+            print(f"⚠️ failed to select Number of Frame Edges: {e}")
             self.page.locator(f"div.ant-select-item-option-content:has-text('{frame_edges}')").first.click()
             self.page.wait_for_timeout(500)
         
@@ -194,25 +193,25 @@ class AddProductPage:
             accessories_label.click()
             self.page.wait_for_timeout(500)
             self.page.get_by_text(accessories_type, exact=True).click()
-            print(f"✅ تم اختيار Accessories Type: {accessories_type}")
+            print(f"✅ select Accessories Type: {accessories_type}")
         except:
             try:
                 self.page.click("div:has-text('Accessories Type')")
                 self.page.wait_for_timeout(500)
                 self.page.click(f"div[title='{accessories_type}']")
-                print(f"✅ تم اختيار Accessories Type: {accessories_type}")
+                print(f"✅ select Accessories Type: {accessories_type}")
             except:
                 try:
                     self.page.get_by_role("combobox", name="Accessories Type").click()
                     self.page.wait_for_timeout(500)
                     self.page.get_by_role("option", name=accessories_type).click()
-                    print(f"✅ تم اختيار Accessories Type: {accessories_type}")
+                    print(f"✅ select Accessories Type: {accessories_type}")
                 except Exception as e:
-                    print(f"⚠️ فشل اختيار Accessories Type: {e}")
+                    print(f"⚠️ failed to select Accessories Type: {e}")
         
         self.page.wait_for_timeout(500)
-        print("✅ تم تعبئة الخيارات الإضافية")
-        
+        print("✅ Go to fill additional options...")
+
         # رجع القيم اللي اتعملها
         return {
             "length": length,
@@ -225,17 +224,17 @@ class AddProductPage:
     
     def fill_notes(self, notes):
         """تعبئة الملاحظات"""
-        print("📝 جاري تعبئة الملاحظات...")
+        print("📝 Go to fill notes...")
         
         # حقل الملاحظات باستخدام quill editor
         self.page.locator(".ql-editor").click()
         self.page.locator(".ql-editor").fill(notes)
         
-        print("✅ تم تعبئة الملاحظات")
+        print("✅ Notes filled successfully")
     
     def save_product(self):
         """حفظ المنتج والعودة للصفحة الرئيسية"""
-        print("💾 جاري حفظ المنتج...")
+        print("💾 Go to save product...")
         
         # حفظ المنتج
         self.page.get_by_role("button", name="Save").click()
@@ -249,8 +248,8 @@ class AddProductPage:
         # نتأكد اننا رجعنا لصفحة المنتجات النهائية
         try:
             self.page.wait_for_selector("text=Final Products", timeout=10000)
-            print("✅ تم الحفظ والعودة لصفحة المنتجات النهائية")
+            print("✅ Go to save product... Product saved and returned to final products page")
         except:
-            print("⚠️ جاري العودة لصفحة المنتجات النهائية")
+            print("⚠️ Go to return to final products page")
             self.page.goto("https://idif.ebdaa-business.com/finalProducts")
             self.page.wait_for_timeout(3000)

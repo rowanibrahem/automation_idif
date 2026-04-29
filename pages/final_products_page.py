@@ -6,7 +6,7 @@ class FinalProductsPage:
     
     def go_to_final_products(self):
         """الذهاب لصفحة المنتجات النهائية"""
-        print("📦 جاري الذهاب للمنتجات النهائية...")
+        print("📦 Go to final products page..")
         
         # جرب اكتر من طريقة
         try:
@@ -18,18 +18,18 @@ class FinalProductsPage:
                 self.page.goto("https://idif.ebdaa-business.com/finalProducts")
         
         self.page.wait_for_timeout(3000)
-        print("✅ تم الوصول لصفحة المنتجات النهائية")
+        print("✅ arrive to final products page")
     
     def click_add_product(self):
         """الضغط على زر اضافة منتج"""
-        print("➕ جاري الضغط على زر اضافة منتج...")
+        print("➕ Go to add product page...")
         self.page.get_by_role("button", name="plus Add Product").click()
         self.page.wait_for_timeout(3000)
-        print("✅ تم الضغط على زر الاضافة")
+        print("✅ arrive to add product page")
     
     def search_for_product(self, product_name):
         """البحث عن منتج"""
-        print(f"🔍 جاري البحث عن المنتج: {product_name}")
+        print(f"🔍 Searching for product: {product_name}")
         
         # انتظر تحميل الجدول
         self.page.wait_for_timeout(2000)
@@ -55,9 +55,9 @@ class FinalProductsPage:
             search_box.click()
             search_box.fill(product_name)
             self.page.wait_for_timeout(3000)
-            print(f"✅ تم البحث عن: {product_name}")
+            print(f"✅ Searching for: {product_name}")
         else:
-            print("❌ لم أجد حقل البحث")
+            print("❌ No search box found")
             self.page.screenshot(path="no_search_box.png")
     
     def verify_product_exists(self, product_name):
@@ -65,10 +65,10 @@ class FinalProductsPage:
         try:
             # انتظر ظهور المنتج
             self.page.wait_for_selector(f"text={product_name}", timeout=10000)
-            print(f"✅ تم العثور على المنتج: {product_name}")
+            print(f"✅ Found product: {product_name}")
             return True
         except:
-            print(f"❌ لم يتم العثور على المنتج: {product_name}")
+            print(f"❌ Product not found: {product_name}")
             # خد سكرين شوت عشان نشوف ايه موجود
             self.page.screenshot(path="product_not_found.png")
             return False
