@@ -20,7 +20,7 @@ class TestFinalProducts:
     def test_add_standard_product_3_times(self):
         """🔄 تشغيل الاختبار 3 مرات متتالية - Standard Product"""
         print("\n" + "="*70)
-        print("🔄 بدء تشغيل اختبار المنتج القياسي 3 مرات متتالية")
+        print("🔄 Starting Standard Product Tests 3 times")
         print("="*70)
         
         results = []
@@ -28,7 +28,7 @@ class TestFinalProducts:
         
         for run in range(1, 4):
             print(f"\n{'='*50}")
-            print(f"📌 التشغيل رقم {run} من 3")
+            print(f"📌 start number {run} من 3")
             print(f"{'='*50}")
             
             try:
@@ -50,7 +50,7 @@ class TestFinalProducts:
                 product_name_en = f"Standard Test Run{run} {timestamp}"
                 product_code = f"STDR{run}{timestamp}"
                 
-                print(f"📝 المنتج {run}: {product_name_ar} - {product_code}")
+                print(f"📝 product {run}: {product_name_ar} - {product_code}")
                 
                 # 4. رفع صورة
                 self.add_product_page.upload_image("test_data/product_image.jpeg")
@@ -113,7 +113,7 @@ class TestFinalProducts:
                 print(f"\n❌ التشغيل {run}: FAILED - {str(e)}")
                 # خد سكرين شوت للخطأ
                 self.page.screenshot(path=f"failure_run_{run}.png")
-                print(f"📸 تم حفظ سكرين شوت: failure_run_{run}.png")
+                print(f"📸 save screenshot: failure_run_{run}.png")
                 
                 # استمر في التشغيلات التالية حتى لو فشلت واحدة
                 continue

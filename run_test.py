@@ -4,7 +4,7 @@ import sys
 def run_tests():
     """تشغيل اختبارات Playwright"""
     
-    print("🚀 بدء تشغيل اختبارات الأتمتة...")
+    print("Start Running Tests")
     print("-" * 50)
     
     # تشغيل اختبار standard
@@ -15,9 +15,9 @@ def run_tests():
     ])
     
     if result.returncode == 0:
-        print("\n✅ جميع الاختبارات اكتملت بنجاح!")
+        print("\n✅ All tests passed successfully!")
     else:
-        print("\n❌ حدث خطأ في الاختبارات")
+        print("\n❌ An error occurred in the tests")
     
     return result.returncode
 
