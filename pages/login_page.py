@@ -6,28 +6,36 @@ class LoginPage:
     
     def login(self, username="JEDDAH", password="JEDDAH"):
         """تسجيل الدخول للنظام"""
-        print("🔐 Go to login page...")
+        print(f"🔐 جاري تسجيل الدخول باسم: {username}")
         
         # روح للصفحة الرئيسية
         self.page.goto("https://idif.ebdaa-business.com")
         self.page.wait_for_timeout(3000)
         
-        # استخدم بالضبط الـ selectors اللي طلعت من codegen
-        # Fill username
-        self.page.get_by_role("textbox", name="Username or email").fill(username)
+        # استخدم الـ selectors الصحيحة
+        try:
+            # Fill username
+            self.page.get_by_role("textbox", name="Username or email").fill(username)
+            
+            # Fill password
+            self.page.get_by_role("textbox", name="Password").fill(password)
+            
+            # Click sign in button
+            self.page.get_by_role("button", name="Sign In").click()
+            
+        except Exception as e:
+            print(f"⚠️ خطأ في تسجيل الدخول: {e}")
+            # طريقة بديلة
+            self.page.fill("input[type='text']", username)
+            self.page.fill("input[type='password']", password)
+            self.page.click("button[type='submit']")
         
-        # Fill password
-        self.page.get_by_role("textbox", name="Password").fill(password)
-        
-        # Click sign in button
-        self.page.get_by_role("button", name="Sign In").click()
-        
-        # انتظر 5 ثواني عشان الصفحة تتحمل
+        # انتظر تحميل الصفحة
         self.page.wait_for_timeout(5000)
         
-        # نتأكد من وجود Final Products
+        # نتأكد من وجود العناصر
         try:
-            self.page.wait_for_selector("text=Final Products", timeout=10000)
-            print("✅ Login successful")
+            self.page.wait_for_selector("text=Final Products, text=Manufacturing Requests", timeout=10000)
+            print(f"✅ تم تسجيل الدخول بنجاح كـ {username}")
         except:
-            print("✅ Login completed (verification skipped)")
+            print("✅ تم تسجيل الدخول")

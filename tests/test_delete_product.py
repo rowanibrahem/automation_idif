@@ -4,7 +4,7 @@ from pages.login_page import LoginPage
 from pages.final_products_page import FinalProductsPage
 from pages.delete_product_page import DeleteProductPage
 from playwright.sync_api import expect
-
+from utilis.config import Config
 class TestDeleteProduct:
     
     @pytest.fixture(autouse=True)
@@ -20,7 +20,10 @@ class TestDeleteProduct:
         print("🗑️Start delete first product test ")
         print("="*60)
         
-        self.login_page.login()
+        self.login_page.login(
+            username=Config.Users.JEDDAH["username"], 
+            password=Config.Users.JEDDAH["password"]
+        )
         self.final_products_page.go_to_final_products()
         
         # سجل عدد المنتجات قبل الحذف

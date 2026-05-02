@@ -7,6 +7,7 @@ from datetime import datetime
 from pages.login_page import LoginPage
 from pages.final_products_page import FinalProductsPage
 from pages.add_product_page import AddProductPage
+from utilis.config import Config
 
 class TestFinalProducts:
     
@@ -167,7 +168,10 @@ class TestFinalProducts:
         
         try:
             # 1. تسجيل الدخول
-            self.login_page.login()
+            self.login_page.login(
+            username=Config.Users.JEDDAH["username"], 
+            password=Config.Users.JEDDAH["password"]
+        )
             
             # 2. الذهاب للمنتجات النهائية
             self.final_products_page.go_to_final_products()

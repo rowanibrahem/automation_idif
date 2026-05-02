@@ -3,6 +3,7 @@ from pages.login_page import LoginPage
 from pages.final_products_page import FinalProductsPage
 from pages.edit_product_page import EditProductPage
 from playwright.sync_api import expect
+from utilis.config import Config
 
 class TestEditProduct:
     
@@ -19,7 +20,10 @@ class TestEditProduct:
         print("="*60)
         
         # 1. تسجيل الدخول والذهاب للمنتجات
-        self.login_page.login()
+        self.login_page.login(
+            username=Config.Users.JEDDAH["username"], 
+            password=Config.Users.JEDDAH["password"]
+        )
         self.final_products_page.go_to_final_products()
         
         # بيانات التجربة
