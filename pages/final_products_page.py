@@ -27,9 +27,9 @@ class FinalProductsPage:
         self.page.wait_for_timeout(3000)
         print("✅ arrive to add product page")
     
-    def search_for_product(self, product_name):
+    def search_for_product(self, product_code):
         """البحث عن منتج"""
-        print(f"🔍 Searching for product: {product_name}")
+        print(f"🔍 Searching for product: {product_code}")
         
         # انتظر تحميل الجدول
         self.page.wait_for_timeout(2000)
@@ -53,22 +53,22 @@ class FinalProductsPage:
         
         if search_box:
             search_box.click()
-            search_box.fill(product_name)
+            search_box.fill(product_code)
             self.page.wait_for_timeout(3000)
-            print(f"✅ Searching for: {product_name}")
+            print(f"✅ Searching for: {product_code}")
         else:
             print("❌ No search box found")
             self.page.screenshot(path="no_search_box.png")
     
-    def verify_product_exists(self, product_name):
+    def verify_product_exists(self, product_code):
         """التأكد من وجود المنتج في الجدول"""
         try:
             # انتظر ظهور المنتج
-            self.page.wait_for_selector(f"text={product_name}", timeout=10000)
-            print(f"✅ Found product: {product_name}")
+            self.page.wait_for_selector(f"text={product_code}", timeout=10000)
+            print(f"✅ Found product: {product_code}")
             return True
         except:
-            print(f"❌ Product not found: {product_name}")
+            print(f"❌ Product not found: {product_code}")
             # خد سكرين شوت عشان نشوف ايه موجود
             self.page.screenshot(path="product_not_found.png")
             return False

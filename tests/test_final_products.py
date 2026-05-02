@@ -81,11 +81,11 @@ class TestFinalProducts:
                 
                 # 10. البحث عن المنتج
                 self.page.wait_for_timeout(3000)
-                self.final_products_page.search_for_product(product_name_ar)
+                self.final_products_page.search_for_product(product_code)
                 
                 # 11. التحقق
-                assert self.final_products_page.verify_product_exists(product_name_ar), \
-                    f"المنتج {product_name_ar} لم يتم العثور عليه"
+                assert self.final_products_page.verify_product_exists(product_code), \
+                  f"المنتج ذو الكود {product_code} لم يتم العثور عليه"
                 
                 # حساب الوقت المستغرق
                 duration = time.time() - start_time
@@ -214,11 +214,10 @@ class TestFinalProducts:
             
             # 10. البحث عن المنتج
             self.page.wait_for_timeout(3000)
-            self.final_products_page.search_for_product(product_name_ar)
+            self.final_products_page.search_for_product(product_code)
             
             # 11. التحقق
-            assert self.final_products_page.verify_product_exists(product_name_ar), \
-                f"المنتج {product_name_ar} لم يتم العثور عليه"
+            assert self.page.locator(f"text={product_code}").is_visible(), f"Product code {product_code} not found!" 
             
             # حساب الوقت المستغرق
             test_duration = (datetime.now() - test_start_time).total_seconds()
@@ -305,12 +304,12 @@ class TestFinalProducts:
             self.page.wait_for_timeout(5000)
             
             # 10. البحث عن المنتج
-            self.final_products_page.search_for_product(product_name_ar)
+            self.final_products_page.search_for_product(product_code)
             
             # 11. التحقق
-            assert self.final_products_page.verify_product_exists(product_name_ar), \
-                f"المنتج المستورد {product_name_ar} لم يتم العثور عليه"
-            
+            assert self.final_products_page.verify_product_exists(product_code), \
+                 f"المنتج ذو الكود {product_code} لم يتم العثور عليه"
+        
             test_duration = (datetime.now() - test_start_time).total_seconds()
             
             print("\n" + "="*60)
